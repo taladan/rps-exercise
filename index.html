@@ -10,12 +10,16 @@
     <script>
       // Delimit the available choices
       const choices = Array("rock", "paper", "scissors");
-      let computerChoice = getComputerChoice(choices);
-      let playerChoice = getPlayerChoice(choices);
-      let playerWins = 0;
-      let computerWins = 0;
-      let ties = 0;
-      let rounds = 0;
+      let play = confirm(
+        "Would you like to play a game?\n\tThis will let you play 5\n\trounds of Rock, Paper, Scissors!"
+      );
+
+      if (play) {
+        console.log("Starting game...");
+        game();
+      } else {
+        console.log("Cancelling game.");
+      }
 
       // Get the computer guess
       function getComputerChoice(choices) {
@@ -51,33 +55,70 @@
         let computer = computerChoice;
 
         if (player === computerChoice) {
-          message = "tie";
-          ties += 1;
-          return message;
+          return "tie";
           // player win
         } else if (
           (player === "rock" && computer === "scissors") ||
           (player === "scissors" && computer === "paper") ||
           (player === "paper" && computer === "rock")
         ) {
-          playerWins += 1;
-          message = "Player wins!";
-          return message;
+          return "player";
           // computer win
         } else {
-          computerWins += 1;
-          message = "Computer wins!";
-          return message;
+          return "computer";
         }
       }
 
       // Still working on this section
-      // // Display outcome
-      // function showOutcome(){
-      //   outcome = compareChoices(computerChoice, playerChoice);
-      //   alert(outcome)
-      // }
-      //}
+      // Display outcome
+      function showOutcome() {
+        return compareChoices(computerChoice, playerChoice);
+      }
+
+      // game start
+      function game() {
+        let playerWins = 0;
+        let computerWins = 0;
+        let round = 0;
+        let totalRounds = 5;
+        let ties = 0;
+
+        while (round < totalRounds) {
+          let computerChoice = getComputerChoice(choices);
+          let playerChoice = getPlayerChoice(choices);
+          let outcome = compareChoices(computerChoice, playerChoice);
+          let outcomeMessage = "";
+
+          switch (outcome) {
+            // tie case
+            case "tie":
+              ties += 1;
+              outcomeMessage = "It's a tie!";
+              break;
+            // player wins case
+            case "player":
+              playerWins += 1;
+              outcomeMessage = "Player wins! :D";
+              break;
+            // computer wins case
+            case "computer":
+              outcomeMessage = "Computer wins! :(";
+              computerWins += 1;
+              break;
+          }
+          // display outcome in an array at the console
+          console.log(outcomeMessage);
+          round += 1;
+        }
+
+        // output total wins/ties in a table at console
+        const outcomeArray = [
+          ["Player Wins", playerWins],
+          ["Computer Wins", computerWins],
+          ["Ties", ties],
+        ];
+        console.table(outcomeArray);
+      }
     </script>
   </body>
 </html>
