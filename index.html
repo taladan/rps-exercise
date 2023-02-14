@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Delimit the available choices
+      const choices = Array("rock", "paper", "scissors");
+      let computerChoice = getComputerChoice(choices);
+      let playerChoice = getPlayerChoice(choices);
+      let playerWins = 0;
+      let computerWins = 0;
+      let ties = 0;
+      let rounds = 0;
+
+      // Get the computer guess
+      function getComputerChoice(choices) {
+        return choices[Math.floor(Math.random() * choices.length)];
+      }
+
+      // Get player choice
+      function getPlayerChoice(choices) {
+        let keepGoing = true;
+
+        while (keepGoing) {
+          let pick = prompt(
+            `Your choices are: Rock, Paper, or Scissors.\nWhat is your choice?`
+          );
+          if (!choices.includes(pick.toLowerCase())) {
+            console.log("Invalid choice.  Try again.");
+            keepGoing = true;
+          } else {
+            return pick.toLowerCase();
+          }
+        }
+      }
+
+      // win conditions
+      // Rock beats scissors
+      // Scissors beats paper
+      // Paper beats rock
+
+      // Compare choices
+      function compareChoices(computerChoice, playerChoice) {
+        let message;
+        let player = playerChoice;
+        let computer = computerChoice;
+
+        if (player === computerChoice) {
+          message = "tie";
+          ties += 1;
+          return message;
+          // player win
+        } else if (
+          (player === "rock" && computer === "scissors") ||
+          (player === "scissors" && computer === "paper") ||
+          (player === "paper" && computer === "rock")
+        ) {
+          playerWins += 1;
+          message = "Player wins!";
+          return message;
+          // computer win
+        } else {
+          computerWins += 1;
+          message = "Computer wins!";
+          return message;
+        }
+      }
+
+      // Still working on this section
+      // // Display outcome
+      // function showOutcome(){
+      //   outcome = compareChoices(computerChoice, playerChoice);
+      //   alert(outcome)
+      // }
+      }
+    </script>
+  </body>
+</html>
