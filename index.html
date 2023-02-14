@@ -13,7 +13,7 @@
       outcomes.
     </p>
     <script>
-      // Delimit the available choices
+      // Don't change these - Necessary for game play
       const choices = Array("rock", "paper", "scissors");
       let play = confirm(
         "Would you like to play a game?\n\tThis will let you play 5\n\trounds of Rock, Paper, Scissors!"
@@ -26,12 +26,10 @@
         console.log("Cancelling game.");
       }
 
-      // Get the computer guess
       function getComputerChoice(choices) {
         return choices[Math.floor(Math.random() * choices.length)];
       }
 
-      // Get player choice
       function getPlayerChoice(choices) {
         let keepGoing = true;
 
@@ -54,7 +52,6 @@
       // Scissors beats paper
       // Paper beats rock
 
-      // Compare choices
       function compareChoices(computerChoice, playerChoice) {
         let message;
         let player = playerChoice;
@@ -62,20 +59,17 @@
 
         if (player === computerChoice) {
           return "tie";
-          // player win
         } else if (
           (player === "rock" && computer === "scissors") ||
           (player === "scissors" && computer === "paper") ||
           (player === "paper" && computer === "rock")
         ) {
           return "player";
-          // computer win
         } else {
           return "computer";
         }
       }
 
-      // Display outcome
       function showOutcome() {
         return compareChoices(computerChoice, playerChoice);
       }
@@ -95,28 +89,25 @@
           let outcomeMessage = "";
 
           switch (outcome) {
-            // tie case
             case "tie":
               ties += 1;
               outcomeMessage = "It's a tie!";
               break;
-            // player wins case
             case "player":
               playerWins += 1;
               outcomeMessage = "Player wins! :D";
               break;
-            // computer wins case
             case "computer":
               outcomeMessage = "Computer wins! :(";
               computerWins += 1;
               break;
           }
+
           // display outcome in an array at the console
           console.log(outcomeMessage);
           round += 1;
         }
 
-        // output total wins/ties in a table at console
         const outcomeArray = [
           ["Player Wins", playerWins],
           ["Computer Wins", computerWins],
