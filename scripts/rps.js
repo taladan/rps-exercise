@@ -130,12 +130,16 @@ function play(e) {
 // body mods
 const body = document.body;
 
-//
+// h1
+const title = document.getElementById("head-title");
 
 // titleDiv mods
-const titleDiv = document.createElement("div");
-titleDiv.id = "titleDiv";
-titleDiv.className = "scores";
+const scoreBoard = document.createElement("div");
+scoreBoard.id = "scoreBoard";
+scoreBoard.className = "scoreboard";
+const bumper = document.createTextNode("Some Text Goes here");
+scoreBoard.appendChild(bumper);
+title.appendChild(scoreBoard);
 
 // button mods
 
