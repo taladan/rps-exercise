@@ -10,10 +10,17 @@
 // points. You will likely have to refactor (rework/rewrite) your original code to
 // make it work for this. That’s OK! Reworking old code is an important part of a
 // programmer’s life.
-
-// Get button container
 //
+//
+// Reset scores on page load
+document.body.onload = resetScores();
+
+/* Initialization here */
+//
+//
+// Get button container
 const btnContainer = document.getElementById("btns");
+
 // create three buttons
 const rock = document.createElement("button");
 const paper = document.createElement("button");
@@ -21,11 +28,6 @@ const scissors = document.createElement("button");
 
 // game choices
 const choices = Array("rock", "paper", "scissors");
-
-// win states
-let playerWins = 0;
-let computerWins = 0;
-let ties = 0;
 
 // add button texts
 rock.textContent = "Rock";
@@ -45,26 +47,32 @@ Array.from(btnContainer.children).forEach(function (btn) {
   btn.addEventListener("click", play);
 });
 
-// Don't change these - Necessary for game play
-// Old code below here -- subject to change
-// let play = confirm(
-//   "Would you like to play a game?\n\tThis will let you play 5\n\trounds of Rock, Paper, Scissors!"
-// );
+/*  Game logic functions start here */
+//
+//
+// Reset win states after winner determined
+function resetScores() {
+  console.log("Resetting scores");
+  playerWins = 0;
+  computerWins = 0;
+  ties = 0;
+}
 
+// Computer's throw
 function getComputerChoice(choices) {
   return choices[Math.floor(Math.random() * choices.length)];
 }
 
-// win conditions
-// Rock beats scissors
-// Scissors beats paper
-// Paper beats rock
-
+// Return round win state
 function compareChoices(computerChoice, playerChoice) {
   let message;
   let player = playerChoice;
   let computer = computerChoice;
 
+  // win conditions
+  // Rock beats scissors
+  // Scissors beats paper
+  // Paper beats rock
   if (player === computerChoice) {
     return "tie";
   } else if (
@@ -80,13 +88,16 @@ function compareChoices(computerChoice, playerChoice) {
 
 // game logic
 function play(e) {
-  const playerBtn = e.target.value;
-
   const computerChoice = getComputerChoice(choices);
   const playerChoice = e.target.id;
   const outcome = compareChoices(computerChoice, playerChoice);
+  // player choice display
   console.log(playerChoice);
+
+  // computer choice display
   console.log(computerChoice);
+
+  // round outcome display
   console.log(outcome);
 
   switch (outcome) {
@@ -99,6 +110,7 @@ function play(e) {
       if (playerWins === 5 && computerWins < 5) {
         // set player win state
         console.log("Player Wins!");
+        resetScores();
       }
       break;
     case "computer":
@@ -107,7 +119,29 @@ function play(e) {
       if (playerWins < 5 && computerWins === 5) {
         // set computer win state
         console.log("Computer Wins!");
+        resetScores();
       }
       break;
   }
 }
+
+/*  Page construction logic */
+
+// body mods
+const body = document.body;
+
+//
+
+// titleDiv mods
+const titleDiv = document.createElement("div");
+titleDiv.id = "titleDiv";
+titleDiv.className = "scores";
+
+// button mods
+
+const buttons = document.querySelectorAll("button");
+
+// self notes:
+// the page needs to be set up so that the titleDiv is up top, used to display the messages to the player
+// things like: Name of the game, current guesses for each opponent, total running score, win state for first to five
+// the buttons need to be below the title div, big, bright and clickable.
