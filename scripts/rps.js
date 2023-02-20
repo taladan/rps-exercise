@@ -13,7 +13,10 @@
 //
 //
 // Reset scores on page load
-document.body.onload = resetScores();
+let currentScores = resetScores();
+playerWins = currentScores[0];
+ties = currentScores[1];
+computerWins = currentScores[2];
 
 /* Initialization here */
 //
@@ -52,10 +55,12 @@ Array.from(btnContainer.children).forEach(function (btn) {
 //
 // Reset win states after winner determined
 function resetScores() {
-  console.log("Resetting scores");
+  console.log("resetting scores");
   playerWins = 0;
-  computerWins = 0;
   ties = 0;
+  computerWins = 0;
+  updateScoreDisplay();
+  return [playerWins, ties, computerWins];
 }
 
 // Computer's throw
@@ -91,37 +96,60 @@ function play(e) {
   const computerChoice = getComputerChoice(choices);
   const playerChoice = e.target.id;
   const outcome = compareChoices(computerChoice, playerChoice);
-  // player choice display
-  console.log(playerChoice);
 
-  // computer choice display
-  console.log(computerChoice);
-
-  // round outcome display
-  console.log(outcome);
-
+  // Determine outcome
   switch (outcome) {
     case "tie":
       ties = ties + 1;
+      currentScores[1] = ties;
+      updateScoreDisplay();
       break;
     case "player":
       playerWins = playerWins + 1;
-      console.log("Player Wins: " + playerWins);
+      currentScores[0] = playerWins;
+      updateScoreDisplay();
+      // console.log("Player Wins: " + playerWins);
       if (playerWins === 5 && computerWins < 5) {
         // set player win state
-        console.log("Player Wins!");
-        resetScores();
+        // console.log("Player Wins!");
+        currentScores = resetScores();
+        bumper.textContent = "You won the last battle!";
+        updateScoreDisplay();
       }
       break;
     case "computer":
       computerWins = computerWins + 1;
-      console.log("Computer Wins: " + computerWins);
+      currentScores[2] = computerWins;
+      updateScoreDisplay();
+      // console.log("Computer Wins: " + computerWins);
       if (playerWins < 5 && computerWins === 5) {
         // set computer win state
-        console.log("Computer Wins!");
-        resetScores();
+        // console.log("Computer Wins!");
+        currentScores = resetScores();
+        bumper.textContent = "The Computer won the last battle!";
+        updateScoreDisplay();
       }
       break;
+  }
+}
+
+function initializeScoreDisplay() {
+  row = document.getElementById("scores-row");
+  for (let j = 0; j < currentScores.length; j++) {
+    const cell = document.createElement("td");
+    const cellText = document.createTextNode(currentScores[j]);
+    // cell[j] = currentScores[j];
+    cell.appendChild(cellText);
+    row.appendChild(cell);
+    scoreTableBody.appendChild(row);
+  }
+}
+
+function updateScoreDisplay() {
+  row = document.getElementById("scores-row");
+  cells = Array.from(document.querySelectorAll("td"));
+  for (let cell = 0; cell < cells.length; cell++) {
+    cells[cell].textContent = currentScores[cell];
   }
 }
 
@@ -135,17 +163,39 @@ const title = document.getElementById("head-title");
 
 // titleDiv mods
 const scoreBoard = document.createElement("div");
+const bumper = document.createTextNode(
+  "Click 'Rock', 'Paper' or 'Scissors' to play!"
+);
 scoreBoard.id = "scoreBoard";
-scoreBoard.className = "scoreboard";
-const bumper = document.createTextNode("Some Text Goes here");
+scoreBoard.className = "score";
+
+// scoreboard displays as a table
+let scoreTable = document.createElement("table");
+let scoreTableHeader = scoreTable.createTHead();
+let scoreTableHeaderRow = scoreTableHeader.insertRow();
+let scoreTableBody = scoreTable.createTBody();
+let scoreTablePointsRow = scoreTable.insertRow();
+scoreTablePointsRow.id = "scores-row";
+scoreTableHeader.appendChild(scoreTableHeaderRow);
+scoreTable.appendChild(scoreTableHeader);
+scoreTable.appendChild(scoreTableBody);
+scoreBoard.appendChild(scoreTable);
+scoreTable.style.width = "50%";
+scoreTable.style.border = "0px";
+
+// populate table header
+tableHeaderText = ["Player Wins", "Ties", "Computer Wins"];
+for (let key of tableHeaderText) {
+  let th = document.createElement("th");
+  let text = document.createTextNode(key);
+  th.appendChild(text);
+  scoreTableHeaderRow.appendChild(th);
+}
+
+// place scoreboard in document
+title.after(scoreBoard);
 scoreBoard.appendChild(bumper);
-title.appendChild(scoreBoard);
 
 // button mods
-
 const buttons = document.querySelectorAll("button");
-
-// self notes:
-// the page needs to be set up so that the titleDiv is up top, used to display the messages to the player
-// things like: Name of the game, current guesses for each opponent, total running score, win state for first to five
-// the buttons need to be below the title div, big, bright and clickable.
+initializeScoreDisplay();
