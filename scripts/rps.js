@@ -14,120 +14,100 @@
 // Get button container
 //
 const btnContainer = document.getElementById("btns");
-console.log(btnContainer);
 // create three buttons
 const rock = document.createElement("button");
 const paper = document.createElement("button");
 const scissors = document.createElement("button");
 
-rock.textContent = "Rock";
-paper.textContent = "Paper";
-scissors.textContent = "Scissors";
+// game choices
+const choices = Array("rock", "paper", "scissors");
 
+// win states
+let playerWins = 0;
+let computerWins = 0;
+let ties = 0;
+
+// add button texts
+rock.textContent = "Rock";
+rock.id = "rock";
+paper.textContent = "Paper";
+paper.id = "paper";
+scissors.textContent = "Scissors";
+scissors.id = "scissors";
+
+// add buttons to container
 btnContainer.appendChild(rock);
 btnContainer.appendChild(paper);
 btnContainer.appendChild(scissors);
 
+// Add even listeners to buttons
+Array.from(btnContainer.children).forEach(function (btn) {
+  btn.addEventListener("click", play);
+});
+
 // Don't change these - Necessary for game play
 // Old code below here -- subject to change
-// const choices = Array("rock", "paper", "scissors");
 // let play = confirm(
 //   "Would you like to play a game?\n\tThis will let you play 5\n\trounds of Rock, Paper, Scissors!"
 // );
 
-// if (play) {
-//   console.log("Starting game...");
-//   game();
-// } else {
-//   console.log("Cancelling game.");
-// }
+function getComputerChoice(choices) {
+  return choices[Math.floor(Math.random() * choices.length)];
+}
 
-// function getComputerChoice(choices) {
-//   return choices[Math.floor(Math.random() * choices.length)];
-// }
+// win conditions
+// Rock beats scissors
+// Scissors beats paper
+// Paper beats rock
 
-// function getPlayerChoice(choices) {
-//   let keepGoing = true;
+function compareChoices(computerChoice, playerChoice) {
+  let message;
+  let player = playerChoice;
+  let computer = computerChoice;
 
-//   while (keepGoing) {
-//     let pick = prompt(
-//       `Your choices are: Rock, Paper, or Scissors.\nWhat is your choice?`
-//     );
-//     if (!choices.includes(pick.toLowerCase())) {
-//       console.log("Invalid choice.  Try again.");
-//       keepGoing = true;
-//     } else {
-//       keepGoing = false;
-//       return pick.toLowerCase();
-//     }
-//   }
-// }
+  if (player === computerChoice) {
+    return "tie";
+  } else if (
+    (player === "rock" && computer === "scissors") ||
+    (player === "scissors" && computer === "paper") ||
+    (player === "paper" && computer === "rock")
+  ) {
+    return "player";
+  } else {
+    return "computer";
+  }
+}
 
-// // win conditions
-// // Rock beats scissors
-// // Scissors beats paper
-// // Paper beats rock
+// game logic
+function play(e) {
+  const playerBtn = e.target.value;
 
-// function compareChoices(computerChoice, playerChoice) {
-//   let message;
-//   let player = playerChoice;
-//   let computer = computerChoice;
+  const computerChoice = getComputerChoice(choices);
+  const playerChoice = e.target.id;
+  const outcome = compareChoices(computerChoice, playerChoice);
+  console.log(playerChoice);
+  console.log(computerChoice);
+  console.log(outcome);
 
-//   if (player === computerChoice) {
-//     return "tie";
-//   } else if (
-//     (player === "rock" && computer === "scissors") ||
-//     (player === "scissors" && computer === "paper") ||
-//     (player === "paper" && computer === "rock")
-//   ) {
-//     return "player";
-//   } else {
-//     return "computer";
-//   }
-// }
-
-// function showOutcome() {
-//   return compareChoices(computerChoice, playerChoice);
-// }
-
-// // game start
-// function game() {
-//   let playerWins = 0;
-//   let computerWins = 0;
-//   let round = 0;
-//   let totalRounds = 5;
-//   let ties = 0;
-
-//   while (round < totalRounds) {
-//     let computerChoice = getComputerChoice(choices);
-//     let playerChoice = getPlayerChoice(choices);
-//     let outcome = compareChoices(computerChoice, playerChoice);
-//     let outcomeMessage = "";
-
-//     switch (outcome) {
-//       case "tie":
-//         ties += 1;
-//         outcomeMessage = "It's a tie!";
-//         break;
-//       case "player":
-//         playerWins += 1;
-//         outcomeMessage = "Player wins! :D";
-//         break;
-//       case "computer":
-//         outcomeMessage = "Computer wins! :(";
-//         computerWins += 1;
-//         break;
-//     }
-
-//     // display outcome in an array at the console
-//     console.log(outcomeMessage);
-//     round += 1;
-//   }
-
-//   const outcomeArray = [
-//     ["Player Wins", playerWins],
-//     ["Computer Wins", computerWins],
-//     ["Ties", ties],
-//   ];
-//   console.table(outcomeArray);
-// }
+  switch (outcome) {
+    case "tie":
+      ties = ties + 1;
+      break;
+    case "player":
+      playerWins = playerWins + 1;
+      console.log("Player Wins: " + playerWins);
+      if (playerWins === 5 && computerWins < 5) {
+        // set player win state
+        console.log("Player Wins!");
+      }
+      break;
+    case "computer":
+      computerWins = computerWins + 1;
+      console.log("Computer Wins: " + computerWins);
+      if (playerWins < 5 && computerWins === 5) {
+        // set computer win state
+        console.log("Computer Wins!");
+      }
+      break;
+  }
+}
