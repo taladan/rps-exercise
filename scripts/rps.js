@@ -24,9 +24,9 @@ rock.textContent = "Rock";
 paper.textContent = "Paper";
 scissors.textContent = "Scissors";
 
-// btnContainer.appendChild(rock);
-// btnContainer.appendChild(paper);
-// btnContainer.appendChild(scissors);
+btnContainer.appendChild(rock);
+btnContainer.appendChild(paper);
+btnContainer.appendChild(scissors);
 
 // Don't change these - Necessary for game play
 // Old code below here -- subject to change
