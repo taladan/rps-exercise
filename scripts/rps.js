@@ -55,7 +55,6 @@ Array.from(btnContainer.children).forEach(function (btn) {
 //
 // Reset win states after winner determined
 function resetScores() {
-  console.log("resetting scores");
   playerWins = 0;
   ties = 0;
   computerWins = 0;
@@ -198,4 +197,6 @@ scoreBoard.appendChild(bumper);
 
 // button mods
 const buttons = document.querySelectorAll("button");
+
+/* special init - last to run */
 initializeScoreDisplay();
