@@ -22,21 +22,21 @@ const rockImg = document.createElement("img");
 const rockCaption = document.createElement("figcaption");
 const rockText = document.createTextNode("Rock");
 rockImg.id = "rock";
-rockImg.setAttribute("src", "../img/rock.png");
+rockImg.setAttribute("src", "./img/rock.png");
 
 const paper = document.createElement("figure");
 const paperImg = document.createElement("img");
 const paperCaption = document.createElement("figcaption");
 const paperText = document.createTextNode("Paper");
 paperImg.id = "paper";
-paperImg.setAttribute("src", "../img/paper.png");
+paperImg.setAttribute("src", "./img/paper.png");
 
 const scissors = document.createElement("figure");
 const scissorsImg = document.createElement("img");
 const scissorsCaption = document.createElement("figcaption");
 const scissorsText = document.createTextNode("Scissors");
 scissorsImg.id = "scissors";
-scissorsImg.setAttribute("src", "../img/scissors.png");
+scissorsImg.setAttribute("src", "./img/scissors.png");
 
 rockCaption.className = "caption";
 paperCaption.className = "caption";
