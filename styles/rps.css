@@ -1,0 +1,91 @@
+/* CSS HEX */
+:root {
+  --mint-cream: #f1f7edff;
+  --dark-slate-gray: #243e36ff;
+  --cambridge-blue: #7ca982ff;
+}
+
+body {
+  background-color: var(--dark-slate-gray);
+}
+
+h1 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem;
+  color: var(--cambridge-blue);
+}
+
+#rules{
+  font-size: 1.5rem;
+  color: var(--mint-cream);
+}
+
+#scoreBoard {
+  margin: 0 auto;
+  font-size: 3rem;
+  color: var(--cambridge-blue);
+}
+
+table{
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
+th {
+  height: 1rem;
+  width: 1rem
+  text-align: center;
+  vertical-align: middle;
+}
+td {
+  height: 1rem;
+  width: 1rem
+  margin: 0, auto;
+  text-align: center;
+  vertical-align: middle;
+}
+#btns {
+  background-color: var(--dark-slate-gray);
+  margin-top: 6rem;
+  display: flex;
+  justify-content: space-around;
+  /* min-width: 10%;
+  min-height: 10%; */
+}
+
+button {
+  background-color: var(--dark-slate-gray);
+  border: none;
+  max-width: 200px;
+  max-height: 200px;
+  /* background-repeat: no-repeat; */
+}
+
+img {
+  max-width: 15rem;
+  max-height: 15rem;
+  -webkit-filter: drop-shadow(20px 20px 20px #222);
+  filter: drop-shadow(20px 20px 20px #222);
+}
+
+figure {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.caption {
+  margin-top: 3rem;
+  font-size: 2rem;
+  color: var(--mint-cream);
+}
+
+#bumper{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
